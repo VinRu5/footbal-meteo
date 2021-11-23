@@ -1,22 +1,24 @@
 <template>
   <div class="row justify-content-around align-items-center row-height">
-    <h2 class="text-center">Carica il tuo file per determinare la squadra con la minor differenza reti</h2>
+    <h2 class="text-center">
+      Carica il tuo file per determinare la squadra con la minor differenza reti
+    </h2>
     <FileReader @load="text = $event"></FileReader>
-    <button 
-      class="col-3 btn btn-light"
-      @click="showTeam()"
-    >
-      Click
-    </button>
-  <div v-if="showResult()">
-    <div class="text-center mt-4">La minor differenza reti è di:</div>
-    <div class="text-center">{{ winnerTeam.name }} con una differenza reti di {{ winnerTeam.scoredGoals - winnerTeam.concededGoals }}</div>
-  </div>
+    <button class="col-3 btn btn-light" @click="showTeam()">Avvia</button>
+    <div v-if="showResult()">
+      <div class="text-center mt-4">La minor differenza reti è di:</div>
+      <div class="text-center">
+        {{ winnerTeam.name }} con una differenza reti di
+        {{ winnerTeam.scoredGoals - winnerTeam.concededGoals }}
+      </div>
+    </div>
+    <HomeButton @showHome="$emit('showHome')"/>
   </div>
 </template>
 
 <script>
 import FileReader from "./FileReader.vue";
+import HomeButton from './HomeButton.vue';
 
 export default {
   name: "Football",
@@ -27,10 +29,11 @@ export default {
   }),
   components: {
     FileReader,
+    HomeButton,
   },
 
   computed: {
-    //Array contenente le squadre di calcio 
+    //Array contenente le squadre di calcio
     teams() {
       //Creo un array di linee di testo
       const lines = this.text
@@ -62,45 +65,38 @@ export default {
         });
       });
 
-      console.log(teams);
       return teams;
     },
   },
 
   methods: {
-    
-    showTeam() { //funzione per determinare la squadre con minor differenza reti
+    showTeam() {
+      //funzione per determinare la squadre con minor differenza reti
 
+      if (this.teams.length === 0) {
+        this.winnerTeam = {};
+      } else {
+        let winner;
+        let teamWinner;
 
-        if(this.teams.length === 0) {
-            this.winnerTeam = '';
-        } else {
-            
-            let winner;
-            let teamWinner;
+        this.teams.forEach((team) => {
+          let difference = Math.abs(team.scoredGoals - team.concededGoals);
 
-            this.teams.forEach(team=> {
-                let difference = Math.abs(team.scoredGoals - team.concededGoals);
-
-                if(typeof winner === 'undefined' || winner > difference) {
-                
-              
-                    winner = difference;
-                    teamWinner = team;
-
-                }
-            })
-            this.winnerTeam = teamWinner;
-        }
+          if (typeof winner === "undefined" || winner > difference) {
+            winner = difference;
+            teamWinner = team;
+          }
+        });
+        this.winnerTeam = teamWinner;
+      }
     },
 
     showResult() {
       return Object.keys(this.winnerTeam).length === 0 ? false : true;
-    }
+    },
   },
 };
 </script>
 
 <style scoped>
-
 </style>
