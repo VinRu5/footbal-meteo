@@ -5,7 +5,7 @@
       piccola
     </h2>
     <FileReader @load="text = $event"></FileReader>
-    <button class="col-3 btn btn-light" @click="showDay()">Avvia</button>
+    <button class="col-3 btn btn-light" @click="showDay()" data-test="buttonAvvia">Avvia</button>
     <div v-if="showResult()">
       <div class="text-center mt-4">La minor escursione termica è avvenuta il:</div>
       <div class="text-center">

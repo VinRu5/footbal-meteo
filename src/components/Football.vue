@@ -4,7 +4,7 @@
       Carica il tuo file per determinare la squadra con la minor differenza reti
     </h2>
     <FileReader @load="text = $event"></FileReader>
-    <button class="col-3 btn btn-light" @click="showTeam()">Avvia</button>
+    <button class="col-3 btn btn-light" @click="showTeam()" data-test="buttonAvvia">Avvia</button>
     <div v-if="showResult()">
       <div class="text-center mt-4">La minor differenza reti è di:</div>
       <div class="text-center">

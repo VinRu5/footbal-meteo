@@ -5,12 +5,14 @@
     <button 
         class="col-3 btn btn-light"
         @click="$emit('viewFootball')"
+        data-test="buttonFootball"
     >
         Dati Football
     </button>
     <button 
         class="col-3 btn btn-light"
         @click="$emit('viewWeather')"
+        data-test="buttonWeather"
     >
         Dati Meteo
     </button>

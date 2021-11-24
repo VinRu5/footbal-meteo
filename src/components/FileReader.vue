@@ -1,5 +1,10 @@
 <template>
-  <input type="file" class="input-style" @change="loadTextFromFile">
+  <input 
+    type="file" 
+    class="input-style" 
+    @change="loadTextFromFile"
+    data-test="input-file"
+  />
 </template>
 
 <script>
